@@ -1,11 +1,11 @@
 public class Flight {
-    String date;
-    String deptCity;
-    String destCity;
-    String economyClass;
-    double economyClassPrice;
-    String businessClass;
-    double businessClassPrice;
+    private String date;
+    private String deptCity;
+    private String destCity;
+    private String airlinesName;
+    private int availableEconomyClassSeat;
+    private double economyClassPrice;
+    private int AvailableBusinessClassSeat;
 
     public String getDate() {
         return date;
@@ -31,12 +31,20 @@ public class Flight {
         this.destCity = destCity;
     }
 
-    public String getEconomyClass() {
-        return economyClass;
+    public String getAirlinesName() {
+        return airlinesName;
     }
 
-    public void setEconomyClass(String economyClass) {
-        this.economyClass = economyClass;
+    public void setAirlinesName(String airlinesName) {
+        this.airlinesName = airlinesName;
+    }
+
+    public int getAvailableEconomyClassSeat() {
+        return availableEconomyClassSeat;
+    }
+
+    public void setAvailableEconomyClassSeat(int availableEconomyClassSeat) {
+        this.availableEconomyClassSeat = availableEconomyClassSeat;
     }
 
     public double getEconomyClassPrice() {
@@ -47,12 +55,12 @@ public class Flight {
         this.economyClassPrice = economyClassPrice;
     }
 
-    public String getBusinessClass() {
-        return businessClass;
+    public int getAvailableBusinessClassSeat() {
+        return AvailableBusinessClassSeat;
     }
 
-    public void setBusinessClass(String businessClass) {
-        this.businessClass = businessClass;
+    public void setAvailableBusinessClassSeat(int availableBusinessClassSeat) {
+        AvailableBusinessClassSeat = availableBusinessClassSeat;
     }
 
     public double getBusinessClassPrice() {
@@ -62,4 +70,8 @@ public class Flight {
     public void setBusinessClassPrice(double businessClassPrice) {
         this.businessClassPrice = businessClassPrice;
     }
+
+    private double businessClassPrice;
+
+
 }

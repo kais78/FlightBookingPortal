@@ -1,11 +1,25 @@
-public class PassengerDetails {
-
-    String passengerName;
-    String passEmail;
-    String passengerId;
+import java.io.Serializable;
+import java.util.Date;
 
 
-    public String getPassengerName() {
+
+public class PassengerDetails implements Serializable {
+    private static final long serialVersionUID = -6849794474667710L;
+
+    public String passengerName;
+    public String passEmail;
+    public String passengerId;
+    String date = new Date().toString();
+
+    public PassengerDetails(String passengerName, String passEmail, String passengerId) {
+        this.passengerName = passengerName;
+        this.passEmail = passEmail;
+        this.passengerId = passengerId;
+    }
+
+
+
+   /* public String getPassengerName() {
         return passengerName;
     }
 
@@ -29,7 +43,7 @@ public class PassengerDetails {
         this.passengerId = passengerId;
     }
 
-
+*/
 
 
 }

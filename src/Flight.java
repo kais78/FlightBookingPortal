@@ -1,4 +1,6 @@
-public class Flight {
+import java.io.Serializable;
+
+public class Flight implements Serializable {
     private String date;
     private String deptCity;
     private String destCity;

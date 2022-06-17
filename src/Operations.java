@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.nio.file.attribute.FileAttribute;
 import java.util.ArrayList;
 import java.util.List;
@@ -6,16 +7,15 @@ import java.util.Scanner;
 
 public class Operations implements Functions {
 
-    public List<Admin> admin = new ArrayList<Admin>();
-    public List<BookingLog> bookingLogs = new ArrayList<BookingLog>();
     public List<Flight> flight = new ArrayList<Flight>();
-    public List<PassengerDetails> passengerDetails = new ArrayList<PassengerDetails>();
-    public List<History> histories = new ArrayList<History>();
 
 
     @Override
     public void showMenu() {
 
+        FileManagement fm = new FileManagement();
+        //Load data from file
+        flight = fm.readFlightDataFromFile("Flight.txt");
         Scanner in = new Scanner(System.in);
         int inp;
         while (true) {
@@ -50,16 +50,16 @@ public class Operations implements Functions {
 
         System.out.println("****Welcome Admin****");
         System.out.println("Please Select from the following menu");
-        System.out.println("\n1. Press 1 to available flight.");//CHOOSE FLIGHT
-        System.out.println("\n2. Press 2 to add a flight.");
-        System.out.println("\n3. Press 3 to check all flights:");
-        System.out.println("\n4. Press 4 to cancel a flight.");
-        System.out.println("\n5. Press 5 to edit your flight.");
-        System.out.println("\n6. Press 6 to delete a passenger");
-        System.out.println("\n7. Press 7 to delete all passenger");
-        System.out.println("\n8. Press 8 to see available booking.");
-        System.out.println("\n9. Press 9 to check all register customers");
-        System.out.println("\n10. Press 10 to exit.");
+        System.out.println("1. Press 1 to available flight.");//CHOOSE FLIGHT
+        System.out.println("2. Press 2 to add a flight.");
+        System.out.println("3. Press 3 to check all flights:");
+        System.out.println("4. Press 4 to cancel a flight.");
+        System.out.println("5. Press 5 to edit your flight.");
+        System.out.println("6. Press 6 to delete a passenger");
+        System.out.println("7. Press 7 to delete all passenger");
+        System.out.println("8. Press 8 to see available booking.");
+        System.out.println("9. Press 9 to check all register customers");
+        System.out.println("10. Press 10 to exit.");
 
         inp = in.nextInt();
         if (inp == 1) {
@@ -72,7 +72,9 @@ public class Operations implements Functions {
             //canselFlight();
         } else if (inp == 5) {
             //editFlight();
-        }else if(inp == 10){
+        } else if (inp ==7){
+            //deletePassenger();
+        } else if(inp == 10){
             System.out.println("getting out from admin menu ........!!!!");
         }
 
@@ -82,6 +84,7 @@ public class Operations implements Functions {
     public void addFlight() {
         Scanner in = new Scanner(System.in);
         Flight fl = new Flight();
+        FileManagement fm = new FileManagement();
 
         String date;
         String deptCity;
@@ -120,6 +123,15 @@ public class Operations implements Functions {
         fl.setBusinessClassPrice(businessClassPrice);
 
         flight.add(fl);
+
+        // saving in the file
+        try{
+            fm.saveFlightDataInFile(flight);
+            System.out.println("Flight Data saved in file .....");
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+
+        }
     }
 
     public void checkAllFlight(){
@@ -135,9 +147,25 @@ public class Operations implements Functions {
         }
 
     }
+    /*public void deletePassenger(){
+        Scanner in = new Scanner(System.in);
+        String del;
+        del = in.nextLine();
 
+        for (int j =0; j < passengerDetails.size();++j){
+            if (del == passengerDetails.get(j).getPassengerName()){
+                passengerDetails.remove(j);
+            }
+        }
+
+    }
+*/
     //Customer Menu
     public void CustomerMenu() {
+        FileManagement fm = new FileManagement();
+
+        //Load data from file
+
         Scanner in = new Scanner(System.in);
         int inp;
 
@@ -169,13 +197,56 @@ public class Operations implements Functions {
 
 
     private void searchFlight() {
+
+        Scanner in = new Scanner(System.in);
+
+        String date;
+        String from ;
+        String to;
+
         System.out.println("\n****Search the destination you intend to travel to ****");
-        System.out.println("\nplease enter your Flight: ");
 
+        System.out.println("\n please desire date you wanna travel :");
+        date = in.nextLine();
 
+        System.out.println("\nplease enter your Flight Depart from : ");
+        from = in.nextLine();
+
+        System.out.println("\nplease enter your Flight Destination : ");
+        to = in.nextLine();
+
+        for (int i = 0; i < flight.size(); i++) {
+            if (date.equals(flight.get(i).getDate()) && from.equals(flight.get(i).getDeptCity()) && to.equals(flight.get(i).getDestCity()))
+            {
+                System.out.println("Flight Date :"+ flight.get(i).getDate());
+                System.out.println("Flight Depart from :"+ flight.get(i).getDeptCity());
+                System.out.println("Flight Destination :"+ flight.get(i).getDestCity());
+                System.out.println("Available Economy Class Seat :"+ flight.get(i).getAvailableEconomyClassSeat());
+                System.out.println("Economy class seat price :"+ flight.get(i).getEconomyClassPrice());
+                System.out.println("Available Business Class Seat:"+ flight.get(i).getAvailableBusinessClassSeat());
+                System.out.println("Business class seat price:"+ flight.get(i).getBusinessClassPrice());
+
+            }else{
+                System.out.println("No Flight exist..... :( ");
+            }
+        }
     }
 
-    /*private void bookFlight () {
+
+}
+
+
+/*public class Operations {
+    ArrayList<PassengerDetails> passengers;
+
+    public Operations() {
+        passengers = (ArrayList<PassengerDetails>) FileUtility.loadObject("passenger.ser");
+
+        if (passengers == null) {
+            passengers = new ArrayList<>();
+        }
+    }*/
+ /*private void bookFlight () {
             System.out.println("\n**** Choose the destination you intend to travel to ****");
             System.out.println("please enter your name: ");
             String passengerName = MainPortal.myScan.nextLine();
@@ -246,17 +317,4 @@ public class Operations implements Functions {
 
     }
     public void save() {FileUtility.saveObject("passenger.ser", passengers);
-    }*/
-}
-
-
-/*public class Operations {
-    ArrayList<PassengerDetails> passengers;
-
-    public Operations() {
-        passengers = (ArrayList<PassengerDetails>) FileUtility.loadObject("passenger.ser");
-
-        if (passengers == null) {
-            passengers = new ArrayList<>();
-        }
     }*/

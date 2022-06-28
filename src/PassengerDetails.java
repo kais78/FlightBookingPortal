@@ -1,9 +1,10 @@
-public class PassengerDetails {
+import java.io.Serializable;
 
-    String passengerName;
-    String passEmail;
-    String passengerId;
+public class PassengerDetails implements Serializable {
 
+    private String passengerName;
+    private String passEmail;
+    private String passengerId;
 
     public String getPassengerName() {
         return passengerName;
@@ -28,8 +29,4 @@ public class PassengerDetails {
     public void setPassengerId(String passengerId) {
         this.passengerId = passengerId;
     }
-
-
-
-
 }

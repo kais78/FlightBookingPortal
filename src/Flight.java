@@ -2,6 +2,7 @@ import java.io.Serializable;
 
 public class Flight implements Serializable {
     private String date;
+    private String flightNumber;
     private String deptCity;
     private String destCity;
     private String airlinesName;
@@ -15,6 +16,14 @@ public class Flight implements Serializable {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getFlightNumber() {
+        return flightNumber;
+    }
+
+    public void setFlightNumber(String flightNumber) {
+        this.flightNumber = flightNumber;
     }
 
     public String getDeptCity() {
